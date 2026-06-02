@@ -3,15 +3,7 @@ import JourneyNode from './JourneyNode.jsx'
 
 export default function Journey() {
   return (
-    <section className="app-section" aria-labelledby="journey-heading">
-      <h2 id="journey-heading" className="app-section__heading">
-        The journey: two evaluations
-      </h2>
-      <p className="app-section__intro">
-        Every AI system passes through two evaluations — one for the product, one for the
-        use case — before it is approved, deployed and monitored.
-      </p>
-
+    <section className="app-section app-section--journey" aria-label="The AI assurance journey">
       <ol className="app-journey" aria-label="AI assurance journey">
         {journey.map((node, index) => (
           <li key={node.label ?? node.id} className="app-journey__item">
