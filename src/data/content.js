@@ -65,8 +65,35 @@ export const journey = [
       'Approval & sign-off',
     ],
   },
-  { type: 'outcome', label: 'Approved AI System' },
+  { type: 'outcome', label: 'Agency approved use case' },
   { type: 'end', label: 'Deploy, Monitor & Review' },
+]
+
+// Today vs future state for each step of the journey.
+// id matches the journey gate so the colour coding lines up.
+export const todayFuture = [
+  {
+    id: 'product',
+    step: 'Step 1',
+    label: 'Product Evaluation',
+    today: 'Siloed and manual',
+    future: 'AI-augmented and connected',
+  },
+  {
+    id: 'usecase',
+    step: 'Step 2',
+    label: 'Use Case Evaluation (AIAF)',
+    today: 'Manual (Excel)',
+    future: 'Automated system',
+  },
+  {
+    id: 'assurance',
+    step: 'Step 3',
+    label: 'Agency Assurance',
+    today: 'Domain-siloed — cyber, data, privacy, AI, architecture',
+    future: 'Integrated',
+    highlight: 'Reaching the integrated future requires agency focus and priority.',
+  },
 ]
 
 // "What the AIAF is" ✓ / "What the AIAF is not" ✗ — clarifies the Use Case Evaluation step.
@@ -84,12 +111,6 @@ export const keyMessages = {
     'Not an operational assurance function.',
   ],
 }
-
-// The single message most executives miss.
-export const importantMessage =
-  'Approving a product is not the same as approving a use case. A product can be ' +
-  'safe to use and still be unsafe for a specific purpose — so every use case needs ' +
-  'its own AIAF evaluation before an AI system is approved.'
 
 // Office of AI context — central policy, federated agency accountability.
 export const officeOfAI = {
@@ -110,47 +131,4 @@ export const officeOfAI = {
     'Privacy, cyber and legal reviews',
     'Operational assurance',
   ],
-}
-
-// Mini self-check — reinforces which step handles each activity.
-export const selfCheck = {
-  options: [
-    { id: 'product', label: 'Product Evaluation' },
-    { id: 'usecase', label: 'Use Case Evaluation (AIAF)' },
-    { id: 'office', label: 'Office of AI' },
-  ],
-  questions: [
-    {
-      prompt: 'Checking data sovereignty, supplier risk and procurement.',
-      answer: 'product',
-      explanation:
-        'Product Evaluation (Agency accountability) asks whether the product itself is safe to use.',
-    },
-    {
-      prompt: 'Assessing human rights, fairness and human impacts for the intended use.',
-      answer: 'usecase',
-      explanation:
-        'Use Case Evaluation (the AIAF, Business accountability) asks whether it is safe for this purpose.',
-    },
-    {
-      prompt: 'Setting the high-risk AI criteria that every agency uses.',
-      answer: 'office',
-      explanation:
-        'The Office of AI owns the policy, the AIAF and the high-risk criteria — the rules both evaluations work within.',
-    },
-    {
-      prompt: 'Confirming the product’s cyber security and architecture.',
-      answer: 'product',
-      explanation:
-        'Cyber security and architecture are part of evaluating the product or solution.',
-    },
-    {
-      prompt: 'Deciding if a purpose is appropriate, with monitoring and redress in place.',
-      answer: 'usecase',
-      explanation:
-        'Transparency, monitoring and appeal & redress are assessed in the Use Case Evaluation (AIAF).',
-    },
-  ],
-  closingMessage:
-    'Two questions, two owners: is the product safe to use, and is it safe for this purpose?',
 }
