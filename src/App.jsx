@@ -1,5 +1,4 @@
 import Header from './components/Header.jsx'
-import Hero from './components/Hero.jsx'
 import Journey from './components/Journey.jsx'
 import ImportantCallout from './components/ImportantCallout.jsx'
 import KeyMessages from './components/KeyMessages.jsx'
@@ -12,7 +11,6 @@ export default function App() {
     <>
       <Header />
       <main id="content" className="nsw-container app-main">
-        <Hero />
         <Journey />
         <ImportantCallout />
         <KeyMessages />

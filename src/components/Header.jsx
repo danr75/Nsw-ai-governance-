@@ -8,7 +8,7 @@ export default function Header() {
       </a>
       <div className="nsw-container app-header__inner">
         <div className="app-masthead">NSW Government</div>
-        <p className="app-header__title">{intro.title}</p>
+        <h1 className="app-header__title">{intro.title}</h1>
         <p className="app-header__tagline">{intro.tagline}</p>
       </div>
     </header>

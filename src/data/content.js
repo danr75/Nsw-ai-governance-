@@ -4,11 +4,6 @@
 export const intro = {
   title: 'NSW AI Governance & Assurance',
   tagline: 'From "I want to use AI" to a safely deployed AI system.',
-  lead:
-    'Two evaluations stand between wanting to use AI and safely deploying it. ' +
-    'First, is the product safe to use? Then, is it safe to use for this ' +
-    'particular purpose? Each answers a different question, and each has a ' +
-    'different owner.',
 }
 
 // The journey — the hero visual.
