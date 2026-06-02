@@ -105,10 +105,7 @@ body {
   max-width: 62ch;
 }
 
-/* ---------- Journey (hero visual) ---------- */
-.app-section--journey {
-  margin-top: 2.25rem;
-}
+/* ---------- Journey (flow visual) ---------- */
 .app-journey {
   list-style: none;
   margin: 0;
@@ -240,46 +237,141 @@ body {
   font-weight: 500;
 }
 
-/* ---------- Two-pane split: flow (left) + today/future (right) ---------- */
+/* ---------- Step explorer (focused, one step at a time) ---------- */
+.app-explorer {
+  margin-top: 2.25rem;
+}
+.app-explorer__stage {
+  border-radius: var(--app-radius);
+  outline-offset: 4px;
+}
 .app-split {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: 2.5rem;
-  align-items: start;
-  margin-top: 2.25rem;
-}
-/* reset section spacing inside the split so the two panes top-align */
-.app-split > .app-section {
-  margin: 0;
+  align-items: center;
 }
 
-/* ---------- Today vs future (right pane) ---------- */
-.app-tf {
-  position: sticky;
-  top: 1.5rem;
+/* Before/after context peeks */
+.app-peek {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-weight: 600;
+  color: var(--app-grey);
+  background: transparent;
+  border: 1px dashed var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, background 0.15s ease;
 }
-.app-tf__table {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.4rem 1rem;
+.app-peek--next {
+  justify-content: flex-end;
+  text-align: right;
 }
-.app-tf__colhead {
-  font-size: 0.8rem;
+.app-peek:hover:not(:disabled) {
+  opacity: 1;
+  background: var(--app-white);
+}
+.app-peek:disabled {
+  cursor: default;
+  opacity: 0.55;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding-bottom: 0.25rem;
-  border-bottom: 2px solid var(--app-border);
+  letter-spacing: 0.04em;
+  font-size: 0.85rem;
 }
-.app-tf__colhead--today {
+.app-peek__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The active step */
+.app-explorer__active {
+  margin: 0.75rem 0;
+  animation: app-fade 0.25s ease;
+}
+.app-explorer__result {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.6rem 0 0;
+  color: var(--app-brand-dark);
+  font-size: 0.98rem;
+}
+.app-explorer__result .material-icons {
+  font-size: 1.1rem;
   color: var(--app-grey);
 }
-.app-tf__colhead--future {
-  color: var(--app-success);
+
+/* Right pane today/future, synced to the active step */
+.app-explorer__tf-inner {
+  animation: app-fade 0.25s ease;
 }
+
+/* Controls + progress */
+.app-explorer__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+.app-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.app-dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid var(--app-brand-dark);
+  background: transparent;
+  cursor: pointer;
+}
+.app-dot.is-active {
+  background: var(--app-brand-dark);
+  transform: scale(1.25);
+}
+.app-explorer__hint {
+  text-align: center;
+  color: var(--app-grey);
+  font-size: 0.9rem;
+  margin: 0.75rem 0 0;
+}
+
+@keyframes app-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-explorer__active,
+  .app-explorer__tf-inner {
+    animation: none;
+  }
+}
+
+/* ---------- Today vs future (right pane content) ---------- */
 .app-tf__row {
-  grid-column: 1 / -1;
-  margin-top: 0.75rem;
+  margin: 0;
 }
 .app-tf__steplabel {
   display: flex;
@@ -483,10 +575,10 @@ button:focus-visible {
 @media (max-width: 960px) {
   .app-split {
     grid-template-columns: 1fr;
-    gap: 2.75rem;
+    gap: 1.75rem;
   }
-  .app-tf {
-    position: static;
+  .app-explorer__controls {
+    flex-wrap: wrap;
   }
 }
 @media (max-width: 720px) {
