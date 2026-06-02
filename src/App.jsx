@@ -1,9 +1,8 @@
 import Header from './components/Header.jsx'
 import Journey from './components/Journey.jsx'
-import ImportantCallout from './components/ImportantCallout.jsx'
+import TodayFuture from './components/TodayFuture.jsx'
 import KeyMessages from './components/KeyMessages.jsx'
 import OfficeOfAI from './components/OfficeOfAI.jsx'
-import SelfCheck from './components/SelfCheck.jsx'
 import Footer from './components/Footer.jsx'
 
 export default function App() {
@@ -11,11 +10,12 @@ export default function App() {
     <>
       <Header />
       <main id="content" className="nsw-container app-main">
-        <Journey />
-        <ImportantCallout />
+        <div className="app-split">
+          <Journey />
+          <TodayFuture />
+        </div>
         <KeyMessages />
         <OfficeOfAI />
-        <SelfCheck />
       </main>
       <Footer />
     </>
