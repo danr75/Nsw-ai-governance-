@@ -1,0 +1,21 @@
+{
+  "name": "nsw-ai-governance",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A simple, NSW Design System tool that helps agencies understand AI governance and assurance responsibilities.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "nsw-design-system": "^3.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.11"
+  }
+}
