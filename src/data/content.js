@@ -3,108 +3,59 @@
 
 export const intro = {
   title: 'NSW AI Governance & Assurance',
-  tagline: 'Who does what — from policy, to assessment, to approval.',
+  tagline: 'From "I want to use AI" to a safely deployed AI system.',
   lead:
-    'Three distinct responsibilities sit behind every AI use case in NSW. ' +
-    'The Office of AI sets the rules, the AIAF identifies what must be done, ' +
-    'and the agency completes assurance and approves the use.',
+    'Two evaluations stand between wanting to use AI and safely deploying it. ' +
+    'First, is the product safe to use? Then, is it safe to use for this ' +
+    'particular purpose? Each answers a different question, and each has a ' +
+    'different owner.',
 }
 
-// The three stages of the value chain — the hero visual.
-// owner colours map to keys defined in index.css (--owner-office / --owner-aiaf / --owner-agency)
-export const stages = [
+// The journey — the hero visual.
+// node types: 'start' | 'gate' | 'outcome' | 'end'
+// gate colours map to keys in index.css (--gate-product / --gate-usecase)
+export const journey = [
+  { type: 'start', label: 'I want to use AI' },
   {
-    id: 'office',
-    owner: 'Office of AI',
-    purpose: 'Define minimum requirements',
-    title: 'NSW AI Policy & Standards',
-    summary: 'Sets the state-wide rules, standards and definitions that every agency works within.',
-    items: [
-      'NSW AI Policy',
-      'NSW AI Assessment Framework (AIAF)',
-      'High-Risk AI Definitions',
-      'Guidance, Templates and Standards',
+    type: 'gate',
+    id: 'product',
+    title: 'Product Evaluation',
+    question: 'Can we safely use this product or solution?',
+    accountability: 'Agency Accountability',
+    assess: [
+      'Cyber security',
+      'Privacy',
+      'Data sovereignty',
+      'Supplier risks',
+      'Procurement',
+      'Architecture',
+      'Legal obligations',
     ],
-    detail: {
-      ownsLabel: 'The Office of AI owns',
-      owns: [
-        'NSW AI Policy',
-        'AIAF',
-        'High-risk AI criteria',
-        'Guidance and templates',
-        'State-wide monitoring and reporting',
-        'Strategic advice and capability uplift',
-      ],
-      notOwnsLabel: 'The Office of AI does not own',
-      notOwns: [
-        'Agency implementation',
-        'Agency approvals',
-        'Agency risk acceptance',
-        'Privacy reviews',
-        'Cyber reviews',
-        'Legal reviews',
-        'Operational assurance',
-      ],
-    },
   },
+  { type: 'outcome', label: 'Approved Product / Solution' },
   {
-    id: 'aiaf',
-    owner: 'AIAF',
-    purpose: 'Identify what must be done',
-    title: 'AIAF Assessment',
-    badge: '~15 mins',
-    summary: 'A short assessment that identifies AI risks and the assurance requirements that apply.',
-    determines: ['Am I using AI?', 'Is the use case high risk?', 'What requirements apply?'],
-    items: [
-      'Privacy Impact Assessment',
-      'Human Rights Assessment',
-      'Records Management Requirements',
-      'Cyber and Security Reviews',
-      'Governance Approvals',
+    type: 'gate',
+    id: 'usecase',
+    title: 'Use Case Evaluation (AIAF)',
+    question: 'Can we safely use this product for this purpose?',
+    accountability: 'Business Accountability',
+    assess: [
+      'Intended use',
+      'Human impacts',
+      'Fairness',
+      'Privacy impacts',
+      'Legal compliance',
+      'Human rights',
+      'Transparency',
+      'Monitoring',
+      'Appeal & redress',
     ],
-    itemsLabel: 'Examples of requirements it may identify',
-    detail: {
-      ownsLabel: 'What the AIAF is',
-      owns: [
-        'A 15-minute assessment that identifies AI risks and applicable requirements',
-        'A single entry point to existing agency assurance obligations',
-        'A mechanism to consistently identify high-risk AI use cases',
-        'A way to make existing compliance requirements easier to navigate',
-      ],
-      notOwnsLabel: 'What the AIAF is not',
-      notOwns: [
-        'Not an approval process',
-        'Not a replacement for agency privacy, legal, cyber, records or risk processes',
-        'Not evidence that a solution is compliant',
-        'Not an operational assurance function',
-      ],
-    },
   },
-  {
-    id: 'agency',
-    owner: 'Agency',
-    purpose: 'Complete assurance & approve use',
-    title: 'Agency Assurance & Approval',
-    summary: 'Agencies complete and evidence the required assurance, then approve deployment and use.',
-    items: ['Privacy', 'Legal', 'Cyber', 'Data', 'Records', 'Business Risk'],
-    itemsLabel: 'Agencies complete and evidence',
-    footnote: 'Agencies approve deployment and use.',
-    detail: {
-      ownsLabel: 'The agency owns',
-      owns: [
-        'Completing assurance activities',
-        'Producing evidence',
-        'Risk acceptance',
-        'Approvals',
-        'Ongoing monitoring',
-        'Incident management',
-        'Compliance with agency policies',
-      ],
-    },
-  },
+  { type: 'outcome', label: 'Approved AI System' },
+  { type: 'end', label: 'Deploy, Monitor & Review' },
 ]
 
-// "What AIAF is" ✓ / "What AIAF is not" ✗
+// "What the AIAF is" ✓ / "What the AIAF is not" ✗ — clarifies the Use Case Evaluation step.
 export const keyMessages = {
   is: [
     'A 15-minute assessment that identifies AI risks and applicable requirements.',
@@ -122,58 +73,70 @@ export const keyMessages = {
 
 // The single message most executives miss.
 export const importantMessage =
-  'The AIAF identifies what assurance activities are required. Agencies remain ' +
-  'responsible for completing those activities and approving the use case.'
+  'Approving a product is not the same as approving a use case. A product can be ' +
+  'safe to use and still be unsafe for a specific purpose — so every use case needs ' +
+  'its own AIAF evaluation before an AI system is approved.'
 
-// The compact separation diagram — central policy, federated agency accountability.
-export const separation = [
-  { owner: 'Office of AI', lines: ['Sets the Rules'] },
-  { owner: 'AIAF', lines: ['Identifies Requirements'] },
-  {
-    owner: 'Agency',
-    lines: ['Provides Evidence', 'Conducts Assurance', 'Approves Use', 'Accepts Risk'],
-  },
-]
+// Office of AI context — central policy, federated agency accountability.
+export const officeOfAI = {
+  intro: 'Both evaluations happen within the rules the Office of AI sets state-wide.',
+  owns: [
+    'NSW AI Policy',
+    'AIAF',
+    'High-risk AI criteria',
+    'Guidance and templates',
+    'State-wide monitoring and reporting',
+    'Strategic advice and capability uplift',
+  ],
+  doesNotOwn: [
+    'Product evaluations',
+    'Use case evaluations',
+    'Agency approvals',
+    'Risk acceptance',
+    'Privacy, cyber and legal reviews',
+    'Operational assurance',
+  ],
+}
 
-// Mini self-check — reinforces who is responsible for each activity.
+// Mini self-check — reinforces which step handles each activity.
 export const selfCheck = {
   options: [
+    { id: 'product', label: 'Product Evaluation' },
+    { id: 'usecase', label: 'Use Case Evaluation (AIAF)' },
     { id: 'office', label: 'Office of AI' },
-    { id: 'aiaf', label: 'AIAF' },
-    { id: 'agency', label: 'Agency' },
   ],
   questions: [
     {
-      prompt: 'Setting the high-risk AI criteria that all agencies use.',
+      prompt: 'Checking data sovereignty, supplier risk and procurement.',
+      answer: 'product',
+      explanation:
+        'Product Evaluation (Agency accountability) asks whether the product itself is safe to use.',
+    },
+    {
+      prompt: 'Assessing human rights, fairness and human impacts for the intended use.',
+      answer: 'usecase',
+      explanation:
+        'Use Case Evaluation (the AIAF, Business accountability) asks whether it is safe for this purpose.',
+    },
+    {
+      prompt: 'Setting the high-risk AI criteria that every agency uses.',
       answer: 'office',
       explanation:
-        'The Office of AI owns the high-risk AI criteria, the NSW AI Policy and the AIAF itself.',
+        'The Office of AI owns the policy, the AIAF and the high-risk criteria — the rules both evaluations work within.',
     },
     {
-      prompt: 'Identifying which assurance requirements apply to a use case.',
-      answer: 'aiaf',
+      prompt: 'Confirming the product’s cyber security and architecture.',
+      answer: 'product',
       explanation:
-        'The AIAF identifies the risks and the requirements — but it does not complete them.',
+        'Cyber security and architecture are part of evaluating the product or solution.',
     },
     {
-      prompt: 'Completing the privacy impact assessment and producing the evidence.',
-      answer: 'agency',
+      prompt: 'Deciding if a purpose is appropriate, with monitoring and redress in place.',
+      answer: 'usecase',
       explanation:
-        'Completing assurance activities and producing evidence is owned by the agency.',
-    },
-    {
-      prompt: 'Approving the deployment and accepting the residual risk.',
-      answer: 'agency',
-      explanation:
-        'Approval and risk acceptance always sit with the agency — the AIAF is not an approval process.',
-    },
-    {
-      prompt: 'State-wide monitoring, reporting and capability uplift.',
-      answer: 'office',
-      explanation:
-        'State-wide monitoring, reporting and capability uplift are owned by the Office of AI.',
+        'Transparency, monitoring and appeal & redress are assessed in the Use Case Evaluation (AIAF).',
     },
   ],
   closingMessage:
-    'The AIAF identifies what is required. Agencies complete the assurance and approve the use.',
+    'Two questions, two owners: is the product safe to use, and is it safe for this purpose?',
 }
