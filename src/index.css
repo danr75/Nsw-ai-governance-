@@ -14,10 +14,9 @@
   --app-white: #ffffff;
   --app-border: #dee3e5;
 
-  /* Owner colour coding for the three stages */
-  --owner-office: #002664; /* Office of AI — brand dark */
-  --owner-aiaf: #d7153a; /* AIAF — brand accent */
-  --owner-agency: #00795f; /* Agency — supplementary teal/green */
+  /* Colour coding for the two evaluation gates */
+  --gate-product: #00795f; /* Product Evaluation — agency, teal */
+  --gate-usecase: #d7153a; /* Use Case Evaluation (AIAF) — accent red */
 
   --app-success: #008a07;
   --app-error: #b81237;
@@ -102,7 +101,7 @@ body {
 .app-section__intro {
   margin: 0 0 1.25rem;
   color: var(--app-grey);
-  max-width: 60ch;
+  max-width: 62ch;
 }
 
 /* ---------- Hero ---------- */
@@ -122,26 +121,52 @@ body {
   margin: 0;
 }
 
-/* ---------- Value chain ---------- */
-.app-chain {
+/* ---------- Journey (hero visual) ---------- */
+.app-journey {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-.app-chain__item {
+.app-journey__item {
   margin: 0;
 }
-.app-chain__arrow {
+.app-journey__arrow {
   display: flex;
   justify-content: center;
   color: var(--app-grey);
-  padding: 0.35rem 0;
+  padding: 0.3rem 0;
 }
-.app-chain__arrow .material-icons {
-  font-size: 2rem;
+.app-journey__arrow .material-icons {
+  font-size: 1.9rem;
 }
 
-.app-stage {
+/* Banners: start / outcome / end */
+.app-banner {
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: var(--app-radius);
+}
+.app-banner--start {
+  background: var(--app-white);
+  border: 2px dashed var(--app-grey);
+  color: var(--app-grey);
+}
+.app-banner--outcome {
+  background: var(--app-brand-dark);
+  color: var(--app-white);
+}
+.app-banner--end {
+  background: var(--app-brand-accent);
+  color: var(--app-white);
+  font-size: 1.05rem;
+}
+
+/* Gate cards: the two evaluations */
+.app-gate {
   display: flex;
   background: var(--app-white);
   border: 1px solid var(--app-border);
@@ -149,168 +174,71 @@ body {
   box-shadow: var(--app-shadow);
   overflow: hidden;
 }
-.app-stage__bar {
+.app-gate__bar {
   flex: 0 0 8px;
-  background: var(--app-grey);
 }
-.app-stage--office .app-stage__bar {
-  background: var(--owner-office);
+.app-gate--product .app-gate__bar {
+  background: var(--gate-product);
 }
-.app-stage--aiaf .app-stage__bar {
-  background: var(--owner-aiaf);
+.app-gate--usecase .app-gate__bar {
+  background: var(--gate-usecase);
 }
-.app-stage--agency .app-stage__bar {
-  background: var(--owner-agency);
-}
-.app-stage__body {
-  padding: 1.5rem 1.75rem;
+.app-gate__body {
+  padding: 1.4rem 1.6rem;
   flex: 1 1 auto;
 }
-.app-stage__top {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 0.5rem;
-}
-.app-stage__step {
-  flex: 0 0 auto;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.app-gate__title {
+  font-size: 1.3rem;
   font-weight: 700;
-  color: var(--app-white);
-  background: var(--app-grey);
+  margin: 0 0 0.35rem;
+  color: var(--app-text);
 }
-.app-stage--office .app-stage__step {
-  background: var(--owner-office);
+.app-gate__question {
+  font-size: 1.1rem;
+  font-style: italic;
+  margin: 0 0 0.85rem;
+  color: var(--app-text);
 }
-.app-stage--aiaf .app-stage__step {
-  background: var(--owner-aiaf);
-}
-.app-stage--agency .app-stage__step {
-  background: var(--owner-agency);
-}
-.app-stage__owner {
+.app-gate__accountability {
   display: inline-block;
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--app-grey);
-}
-.app-stage--office .app-stage__owner {
-  color: var(--owner-office);
-}
-.app-stage--aiaf .app-stage__owner {
-  color: var(--owner-aiaf);
-}
-.app-stage--agency .app-stage__owner {
-  color: var(--owner-agency);
-}
-.app-stage__purpose {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--app-grey);
-}
-.app-stage__title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin: 0.25rem 0 0.35rem;
-  color: var(--app-text);
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-.app-stage__badge {
-  font-size: 0.78rem;
-  font-weight: 600;
-  background: var(--app-off-white);
-  border: 1px solid var(--app-border);
+  color: var(--app-white);
+  padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  padding: 0.15rem 0.7rem;
-  color: var(--app-grey);
+  margin-bottom: 1rem;
 }
-.app-stage__summary {
-  margin: 0 0 1rem;
-  max-width: 60ch;
+.app-gate--product .app-gate__accountability {
+  background: var(--gate-product);
 }
-.app-stage__group {
-  margin-bottom: 0.85rem;
+.app-gate--usecase .app-gate__accountability {
+  background: var(--gate-usecase);
 }
-.app-stage__group-label {
+.app-gate__assess-label {
   font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--app-grey);
-  margin: 0 0 0.35rem;
-}
-.app-stage__list {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-.app-stage__list li {
-  margin: 0.15rem 0;
-}
-.app-stage__footnote {
-  font-weight: 600;
-  margin: 0.5rem 0 0;
-}
-
-/* Stage detail toggle + panel */
-.app-stage__toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.75rem;
-  background: none;
-  border: none;
-  padding: 0.35rem 0;
-  font: inherit;
-  font-weight: 600;
-  color: var(--app-brand-dark);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-}
-.app-stage__toggle:hover {
-  border-bottom-color: var(--app-brand-dark);
-}
-.app-stage__detail {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-top: 1rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--app-border);
-}
-
-/* ---------- Owns / does-not-own lists (shared) ---------- */
-.app-detail__label {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-weight: 700;
   margin: 0 0 0.5rem;
 }
-.app-detail__label .material-icons {
-  font-size: 1.15rem;
-}
-.app-detail__label--owns {
-  color: var(--app-success);
-}
-.app-detail__label--not {
-  color: var(--app-error);
-}
-.app-detail__list {
+.app-gate__assess {
+  list-style: none;
   margin: 0;
-  padding-left: 1.2rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
-.app-detail__list li {
-  margin: 0.2rem 0;
+.app-gate__tag {
+  background: var(--app-off-white);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.92rem;
+  font-weight: 500;
 }
 
 /* ---------- Important callout ---------- */
@@ -385,94 +313,42 @@ body {
   margin: 0.4rem 0;
 }
 
-/* ---------- Responsibilities ---------- */
-.app-resp {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-}
+/* ---------- Owns / does-not-own (Office of AI) ---------- */
 .app-resp__card {
   background: var(--app-white);
   border: 1px solid var(--app-border);
   border-radius: var(--app-radius);
   padding: 1.4rem 1.5rem;
   box-shadow: var(--app-shadow);
-  border-top: 4px solid var(--app-grey);
-}
-.app-resp__card--office {
-  border-top-color: var(--owner-office);
-}
-.app-resp__card--agency {
-  border-top-color: var(--owner-agency);
-}
-.app-resp__title {
-  margin: 0 0 1rem;
-  font-size: 1.2rem;
-  color: var(--app-brand-dark);
+  border-top: 4px solid var(--app-brand-dark);
 }
 .app-resp__cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
-.app-resp__card--agency .app-resp__cols {
-  grid-template-columns: 1fr;
-}
-
-/* ---------- Separation diagram ---------- */
-.app-separation {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  max-width: 520px;
-}
-.app-separation__row {
-  position: relative;
-  background: var(--app-white);
-  border: 1px solid var(--app-border);
-  border-radius: var(--app-radius);
-  padding: 1rem 1.25rem;
-  margin-bottom: 2.25rem;
-  box-shadow: var(--app-shadow);
-  border-left: 8px solid var(--app-grey);
-  text-align: center;
-}
-.app-separation__row:last-child {
-  margin-bottom: 0;
-}
-.app-separation__row--0 {
-  border-left-color: var(--owner-office);
-}
-.app-separation__row--1 {
-  border-left-color: var(--owner-aiaf);
-}
-.app-separation__row--2 {
-  border-left-color: var(--owner-agency);
-}
-.app-separation__owner {
-  display: block;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--app-brand-dark);
-  border-bottom: 1px solid var(--app-border);
-  padding-bottom: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-.app-separation__lines {
+.app-detail__label {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
 }
-.app-separation__line {
-  font-weight: 500;
+.app-detail__label .material-icons {
+  font-size: 1.15rem;
 }
-.app-separation__arrow {
-  position: absolute;
-  bottom: -2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--app-grey);
-  font-size: 1.5rem;
+.app-detail__label--owns {
+  color: var(--app-success);
+}
+.app-detail__label--not {
+  color: var(--app-error);
+}
+.app-detail__list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.app-detail__list li {
+  margin: 0.2rem 0;
 }
 
 /* ---------- Self-check ---------- */
@@ -535,7 +411,6 @@ body {
 .app-check__option.is-dim {
   opacity: 0.5;
 }
-
 .app-check__feedback {
   margin-top: 1rem;
 }
@@ -584,8 +459,6 @@ body {
   max-width: 55ch;
   margin: 0 auto 1.25rem;
 }
-
-/* Ensure NSW buttons in the check have spacing */
 .app-check .nsw-button {
   margin-top: 0.25rem;
 }
@@ -618,13 +491,11 @@ button:focus-visible {
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
   .app-messages,
-  .app-resp,
-  .app-resp__cols,
-  .app-stage__detail {
+  .app-resp__cols {
     grid-template-columns: 1fr;
   }
-  .app-stage__body {
-    padding: 1.25rem;
+  .app-gate__body {
+    padding: 1.2rem;
   }
   .app-hero__heading {
     font-size: 1.7rem;
