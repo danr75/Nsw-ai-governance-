@@ -7,6 +7,7 @@ export default function JourneyNode({ node }) {
         <div className="app-gate__bar" aria-hidden="true" />
         <div className="app-gate__body">
           <h3 className="app-gate__title">{node.title}</h3>
+          {node.subtitle && <p className="app-gate__subtitle">{node.subtitle}</p>}
           <p className="app-gate__question">“{node.question}”</p>
           <span className="app-gate__accountability">{node.accountability}</span>
           <p className="app-gate__assess-label">Assess</p>

@@ -14,9 +14,10 @@
   --app-white: #ffffff;
   --app-border: #dee3e5;
 
-  /* Colour coding for the two evaluation gates */
+  /* Colour coding for the evaluation / assurance gates */
   --gate-product: #00795f; /* Product Evaluation — agency, teal */
   --gate-usecase: #d7153a; /* Use Case Evaluation (AIAF) — accent red */
+  --gate-assurance: #2e5299; /* Agency Assurance — agency, blue */
 
   --app-success: #008a07;
   --app-error: #b81237;
@@ -169,6 +170,9 @@ body {
 .app-gate--usecase .app-gate__bar {
   background: var(--gate-usecase);
 }
+.app-gate--assurance .app-gate__bar {
+  background: var(--gate-assurance);
+}
 .app-gate__body {
   padding: 1.4rem 1.6rem;
   flex: 1 1 auto;
@@ -178,6 +182,12 @@ body {
   font-weight: 700;
   margin: 0 0 0.35rem;
   color: var(--app-text);
+}
+.app-gate__subtitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--app-grey);
+  margin: 0 0 0.5rem;
 }
 .app-gate__question {
   font-size: 1.1rem;
@@ -201,6 +211,9 @@ body {
 }
 .app-gate--usecase .app-gate__accountability {
   background: var(--gate-usecase);
+}
+.app-gate--assurance .app-gate__accountability {
+  background: var(--gate-assurance);
 }
 .app-gate__assess-label {
   font-size: 0.82rem;
