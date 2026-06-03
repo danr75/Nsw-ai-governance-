@@ -8,6 +8,9 @@ import TodayFuture from './TodayFuture.jsx'
 const gates = journey.filter((n) => n.type === 'gate')
 const tfById = Object.fromEntries(todayFuture.map((r) => [r.id, r]))
 
+const startLabel = journey[0].label
+const endLabel = journey.find((n) => n.type === 'end').label
+
 function Arrow() {
   return (
     <div className="app-flowarrow" aria-hidden="true">
@@ -18,6 +21,25 @@ function Arrow() {
 
 function Milestone({ label, variant }) {
   return <div className={`app-milestone${variant ? ` app-milestone--${variant}` : ''}`}>{label}</div>
+}
+
+// A clickable box that navigates to an adjacent step.
+function StepBox({ label, dir, onClick }) {
+  return (
+    <button type="button" className={`app-stepbox app-stepbox--${dir}`} onClick={onClick}>
+      {dir === 'up' && (
+        <span className="material-icons" aria-hidden="true">
+          keyboard_arrow_up
+        </span>
+      )}
+      <span className="app-stepbox__text">{label}</span>
+      {dir === 'down' && (
+        <span className="material-icons" aria-hidden="true">
+          keyboard_arrow_down
+        </span>
+      )}
+    </button>
+  )
 }
 
 export default function JourneyExplorer() {
@@ -73,10 +95,6 @@ export default function JourneyExplorer() {
 
   const gate = gates[active]
   const row = tfById[gate.id]
-  const idx = journey.indexOf(gate)
-  const prevNode = journey[idx - 1]
-  const nextNode = journey[idx + 1]
-  const afterNext = journey[idx + 2]
 
   return (
     <section className="app-explorer" aria-label="AI assurance journey, step by step">
@@ -89,67 +107,33 @@ export default function JourneyExplorer() {
         onKeyDown={onKeyDown}
       >
         <div className="app-split">
-          {/* LEFT — the step in focus, bridged by white milestone boxes */}
+          {/* LEFT — the step in focus, with the prev/next stage above and below */}
           <div className="app-explorer__flow" key={gate.id}>
-            {/* incoming context */}
+            {/* incoming: start box on step 1, otherwise the previous step */}
             {active === 0 ? (
-              <>
-                <Milestone label={journey[0].label} variant="start" />
-                <Arrow />
-              </>
-            ) : prevNode.type === 'outcome' ? (
-              <>
-                <Milestone label={prevNode.label} />
-                <Arrow />
-              </>
+              <Milestone label={startLabel} variant="start" />
             ) : (
-              <button
-                type="button"
-                className="app-peek app-peek--prev"
-                onClick={() => go(-1)}
-              >
-                <span className="material-icons" aria-hidden="true">
-                  keyboard_arrow_up
-                </span>
-                <span className="app-peek__text">
-                  Step {active}: {gates[active - 1].title}
-                </span>
-              </button>
+              <StepBox dir="up" label={`Step ${active}: ${gates[active - 1].title}`} onClick={() => go(-1)} />
             )}
 
-            {/* the active step */}
+            <Arrow />
+
+            {/* the active step (outcome shown as text inside the card) */}
             <div className="app-explorer__active" aria-live="polite">
               <JourneyNode node={gate} step={active + 1} />
             </div>
 
-            {/* result milestone(s) this step leads to */}
-            {nextNode && nextNode.type === 'outcome' && (
-              <>
-                <Arrow />
-                <Milestone label={nextNode.label} />
-                {afterNext && afterNext.type === 'end' && (
-                  <>
-                    <Arrow />
-                    <Milestone label={afterNext.label} variant="end" />
-                  </>
-                )}
-              </>
-            )}
+            <Arrow />
 
-            {/* link to the next step */}
-            {active < max && (
-              <button
-                type="button"
-                className="app-peek app-peek--next"
+            {/* outgoing: the next step, or the deploy box on the last step */}
+            {active < max ? (
+              <StepBox
+                dir="down"
+                label={`Step ${active + 2}: ${gates[active + 1].title}`}
                 onClick={() => go(1)}
-              >
-                <span className="app-peek__text">
-                  Step {active + 2}: {gates[active + 1].title}
-                </span>
-                <span className="material-icons" aria-hidden="true">
-                  keyboard_arrow_down
-                </span>
-              </button>
+              />
+            ) : (
+              <Milestone label={endLabel} variant="end" />
             )}
           </div>
 
