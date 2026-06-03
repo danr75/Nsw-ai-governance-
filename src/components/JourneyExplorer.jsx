@@ -45,67 +45,65 @@ function StepBox({ label, dir, onClick }) {
 export default function JourneyExplorer() {
   const [active, setActive] = useState(0)
   const max = gates.length - 1
-  const stageRef = useRef(null)
-  const activeRef = useRef(0)
-
-  useEffect(() => {
-    activeRef.current = active
-  }, [active])
+  const scrollRef = useRef(null)
 
   const go = (dir) => setActive((a) => Math.min(max, Math.max(0, a + dir)))
 
-  function onKeyDown(e) {
-    if (['ArrowDown', 'ArrowRight', 'PageDown'].includes(e.key)) {
-      e.preventDefault()
-      go(1)
-    } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) {
-      e.preventDefault()
-      go(-1)
-    } else if (e.key === 'Home') {
-      e.preventDefault()
-      setActive(0)
-    } else if (e.key === 'End') {
-      e.preventDefault()
-      setActive(max)
-    }
-  }
-
-  // Scroll within the stage advances one step at a time; releases at the ends
-  // so the rest of the page scrolls normally.
+  // Arrow keys / Page / Home / End move between steps, from anywhere on the page.
   useEffect(() => {
-    const el = stageRef.current
-    if (!el) return
+    function onKey(e) {
+      if (e.target.matches?.('input, textarea, select')) return
+      if (['ArrowDown', 'ArrowRight', 'PageDown'].includes(e.key)) {
+        e.preventDefault()
+        go(1)
+      } else if (['ArrowUp', 'ArrowLeft', 'PageUp'].includes(e.key)) {
+        e.preventDefault()
+        go(-1)
+      } else if (e.key === 'Home') {
+        e.preventDefault()
+        setActive(0)
+      } else if (e.key === 'End') {
+        e.preventDefault()
+        setActive(max)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [max])
+
+  // Scrolling moves one step at a time. If a step is taller than the viewport
+  // (small screens), let it scroll normally instead of stepping.
+  useEffect(() => {
     let lock = false
     function onWheel(e) {
+      const el = scrollRef.current
+      if (el && el.scrollHeight > el.clientHeight + 2) return
       if (Math.abs(e.deltaY) < 8) return
-      const a = activeRef.current
-      const down = e.deltaY > 0
-      if ((a === 0 && !down) || (a === max && down)) return
       e.preventDefault()
       if (lock) return
       lock = true
+      const down = e.deltaY > 0
       setActive((prev) => Math.min(max, Math.max(0, prev + (down ? 1 : -1))))
       setTimeout(() => {
         lock = false
       }, 550)
     }
-    el.addEventListener('wheel', onWheel, { passive: false })
-    return () => el.removeEventListener('wheel', onWheel)
+    window.addEventListener('wheel', onWheel, { passive: false })
+    return () => window.removeEventListener('wheel', onWheel)
   }, [max])
 
   const gate = gates[active]
   const row = tfById[gate.id]
 
   return (
-    <section className="app-explorer" aria-label="AI assurance journey, step by step">
-      <div
-        className="app-explorer__stage"
-        ref={stageRef}
-        tabIndex={0}
-        role="group"
-        aria-roledescription="step viewer"
-        onKeyDown={onKeyDown}
-      >
+    <section
+      id="content"
+      className="app-explorer"
+      aria-label="AI assurance journey, step by step"
+      ref={scrollRef}
+    >
+      <div className="nsw-container app-explorer__inner">
+        <div className="app-explorer__stage" role="group" aria-roledescription="step viewer">
         <div className="app-split">
           {/* LEFT — the step in focus, with the prev/next stage above and below */}
           <div className="app-explorer__flow" key={gate.id}>
@@ -183,6 +181,12 @@ export default function JourneyExplorer() {
         <p className="app-explorer__hint">
           Step {active + 1} of {gates.length} — use ↑ ↓ or scroll to move between steps.
         </p>
+
+        <p className="app-explorer__note">
+          An explainer of NSW AI governance and assurance — not the AIAF assessment or a record of
+          compliance.
+        </p>
+        </div>
       </div>
     </section>
   )
