@@ -31,6 +31,12 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: 'Public Sans', Arial, sans-serif;
@@ -39,9 +45,12 @@ body {
   line-height: 1.6;
 }
 
-.app-main {
-  max-width: var(--app-maxwidth);
-  padding-bottom: 3rem;
+/* Full-height single screen: header pinned, explorer fills the rest. */
+.app-shell {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* ---------- Skip link ---------- */
@@ -62,13 +71,11 @@ body {
 
 /* ---------- Header ---------- */
 .app-header {
+  flex: 0 0 auto;
   background: var(--app-brand-dark);
   color: var(--app-white);
   padding: 1.25rem 0 1.4rem;
   border-bottom: 6px solid var(--app-brand-accent);
-  position: sticky;
-  top: 0;
-  z-index: 20;
 }
 .app-header__inner {
   max-width: var(--app-maxwidth);
@@ -252,11 +259,23 @@ body {
 
 /* ---------- Step explorer (focused, one step at a time) ---------- */
 .app-explorer {
-  margin-top: 2.25rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+.app-explorer__inner {
+  max-width: var(--app-maxwidth);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 .app-explorer__stage {
   border-radius: var(--app-radius);
-  outline-offset: 4px;
+}
+.app-explorer__note {
+  text-align: center;
+  color: var(--app-grey);
+  font-size: 0.82rem;
+  margin: 1.5rem 0 0;
 }
 .app-split {
   display: grid;
@@ -450,24 +469,6 @@ body {
 }
 .app-tf__highlight .material-icons {
   color: var(--app-brand-accent);
-}
-
-/* ---------- Footer ---------- */
-.app-footer {
-  background: var(--app-brand-dark);
-  color: var(--app-white);
-  padding: 2rem 0;
-  margin-top: 3rem;
-}
-.app-footer__text {
-  margin: 0 0 0.5rem;
-  max-width: 70ch;
-  opacity: 0.92;
-}
-.app-footer__meta {
-  margin: 0;
-  font-size: 0.85rem;
-  opacity: 0.8;
 }
 
 /* ---------- Focus visibility (accessibility) ---------- */
