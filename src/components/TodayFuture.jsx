@@ -1,12 +1,7 @@
-// Presentational: renders the Today -> Future comparison for one step.
+// Presentational: the Today -> Future comparison for one step (two boxes only).
 export default function TodayFuture({ row }) {
   return (
-    <div className="app-tf__row" key={row.id}>
-      <p className={`app-tf__steplabel app-tf__steplabel--${row.id}`}>
-        <span className="app-tf__step">{row.step}</span>
-        {row.label}
-      </p>
-
+    <div className="app-tf__row">
       <div className="app-tf__cells">
         <div className="app-tf__cell app-tf__cell--today">
           <span className="app-tf__minilabel">Today</span>
