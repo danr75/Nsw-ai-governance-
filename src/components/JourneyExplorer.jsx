@@ -3,16 +3,21 @@ import { journey, todayFuture } from '../data/content.js'
 import JourneyNode from './JourneyNode.jsx'
 import TodayFuture from './TodayFuture.jsx'
 
-// The focusable "steps" are the gates; surrounding nodes give before/after context.
+// The focusable "steps" are the gates; surrounding nodes (start, outcomes, end)
+// are milestones shown as white boxes that bridge the steps.
 const gates = journey.filter((n) => n.type === 'gate')
 const tfById = Object.fromEntries(todayFuture.map((r) => [r.id, r]))
-const START = journey[0].label
-const END = journey[journey.length - 1].label
 
-// The outcome a gate produces, if the next node in the flow is an outcome.
-function resultFor(gate) {
-  const next = journey[journey.indexOf(gate) + 1]
-  return next && next.type === 'outcome' ? next.label : null
+function Arrow() {
+  return (
+    <div className="app-flowarrow" aria-hidden="true">
+      <span className="material-icons">arrow_downward</span>
+    </div>
+  )
+}
+
+function Milestone({ label, variant }) {
+  return <div className={`app-milestone${variant ? ` app-milestone--${variant}` : ''}`}>{label}</div>
 }
 
 export default function JourneyExplorer() {
@@ -68,9 +73,10 @@ export default function JourneyExplorer() {
 
   const gate = gates[active]
   const row = tfById[gate.id]
-  const result = resultFor(gate)
-  const topPeek = active === 0 ? START : `Step ${active}: ${gates[active - 1].title}`
-  const bottomPeek = active === max ? END : `Step ${active + 2}: ${gates[active + 1].title}`
+  const idx = journey.indexOf(gate)
+  const prevNode = journey[idx - 1]
+  const nextNode = journey[idx + 1]
+  const afterNext = journey[idx + 2]
 
   return (
     <section className="app-explorer" aria-label="AI assurance journey, step by step">
@@ -83,51 +89,72 @@ export default function JourneyExplorer() {
         onKeyDown={onKeyDown}
       >
         <div className="app-split">
-          {/* LEFT — the step in focus, with before/after context peeking */}
-          <div className="app-explorer__flow">
-            <button
-              type="button"
-              className="app-peek app-peek--prev"
-              onClick={() => go(-1)}
-              disabled={active === 0}
-            >
-              <span className="material-icons" aria-hidden="true">
-                keyboard_arrow_up
-              </span>
-              <span className="app-peek__text">{topPeek}</span>
-            </button>
+          {/* LEFT — the step in focus, bridged by white milestone boxes */}
+          <div className="app-explorer__flow" key={gate.id}>
+            {/* incoming context */}
+            {active === 0 ? (
+              <>
+                <Milestone label={journey[0].label} variant="start" />
+                <Arrow />
+              </>
+            ) : prevNode.type === 'outcome' ? (
+              <>
+                <Milestone label={prevNode.label} />
+                <Arrow />
+              </>
+            ) : (
+              <button
+                type="button"
+                className="app-peek app-peek--prev"
+                onClick={() => go(-1)}
+              >
+                <span className="material-icons" aria-hidden="true">
+                  keyboard_arrow_up
+                </span>
+                <span className="app-peek__text">
+                  Step {active}: {gates[active - 1].title}
+                </span>
+              </button>
+            )}
 
-            <div className="app-explorer__active" key={gate.id} aria-live="polite">
-              <JourneyNode node={gate} />
-              {result && (
-                <p className="app-explorer__result">
-                  <span className="material-icons" aria-hidden="true">
-                    arrow_downward
-                  </span>
-                  Result:&nbsp;<strong>{result}</strong>
-                </p>
-              )}
+            {/* the active step */}
+            <div className="app-explorer__active" aria-live="polite">
+              <JourneyNode node={gate} step={active + 1} />
             </div>
 
-            <button
-              type="button"
-              className="app-peek app-peek--next"
-              onClick={() => go(1)}
-              disabled={active === max}
-            >
-              <span className="app-peek__text">{bottomPeek}</span>
-              <span className="material-icons" aria-hidden="true">
-                keyboard_arrow_down
-              </span>
-            </button>
+            {/* result milestone(s) this step leads to */}
+            {nextNode && nextNode.type === 'outcome' && (
+              <>
+                <Arrow />
+                <Milestone label={nextNode.label} />
+                {afterNext && afterNext.type === 'end' && (
+                  <>
+                    <Arrow />
+                    <Milestone label={afterNext.label} variant="end" />
+                  </>
+                )}
+              </>
+            )}
+
+            {/* link to the next step */}
+            {active < max && (
+              <button
+                type="button"
+                className="app-peek app-peek--next"
+                onClick={() => go(1)}
+              >
+                <span className="app-peek__text">
+                  Step {active + 2}: {gates[active + 1].title}
+                </span>
+                <span className="material-icons" aria-hidden="true">
+                  keyboard_arrow_down
+                </span>
+              </button>
+            )}
           </div>
 
-          {/* RIGHT — today vs future for this step only */}
+          {/* RIGHT — today vs future for this step (two boxes only) */}
           <div className="app-explorer__tf">
-            <h2 className="app-section__heading">Today vs the future</h2>
-            <p className="app-section__intro">
-              How this step works today, and where it is heading.
-            </p>
             <div key={row.id} className="app-explorer__tf-inner">
               <TodayFuture row={row} />
             </div>

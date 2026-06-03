@@ -1,12 +1,14 @@
-// Renders one node of the journey. Gate nodes are the evaluation cards;
-// start/outcome/end nodes are banners that mark progress through the flow.
-export default function JourneyNode({ node }) {
+// Renders one gate (evaluation) card. `step`, when given, prefixes the heading.
+export default function JourneyNode({ node, step }) {
   if (node.type === 'gate') {
     return (
       <article className={`app-gate app-gate--${node.id}`}>
         <div className="app-gate__bar" aria-hidden="true" />
         <div className="app-gate__body">
-          <h3 className="app-gate__title">{node.title}</h3>
+          <h3 className="app-gate__title">
+            {step ? `Step ${step}: ` : ''}
+            {node.title}
+          </h3>
           {node.subtitle && <p className="app-gate__subtitle">{node.subtitle}</p>}
           <p className="app-gate__question">“{node.question}”</p>
           <span className="app-gate__accountability">{node.accountability}</span>
