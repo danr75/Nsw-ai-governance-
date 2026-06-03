@@ -26,6 +26,7 @@ export const journey = [
       'Architecture',
       'Legal obligations',
     ],
+    outcome: 'Approved product / solution',
   },
   { type: 'outcome', label: 'Approved Product / Solution' },
   {
@@ -45,6 +46,7 @@ export const journey = [
       'Monitoring',
       'Appeal & redress',
     ],
+    outcome: 'Assurance requirements identified',
   },
   {
     type: 'gate',
@@ -64,6 +66,7 @@ export const journey = [
       'Risk acceptance',
       'Approval & sign-off',
     ],
+    outcome: 'Agency approved use case',
   },
   { type: 'outcome', label: 'Agency approved use case' },
   { type: 'end', label: 'Deploy, Monitor & Review' },
@@ -95,40 +98,3 @@ export const todayFuture = [
     highlight: 'Reaching the integrated future requires agency focus and priority.',
   },
 ]
-
-// "What the AIAF is" ✓ / "What the AIAF is not" ✗ — clarifies the Use Case Evaluation step.
-export const keyMessages = {
-  is: [
-    'A 15-minute assessment that identifies AI risks and applicable requirements.',
-    'A single entry point to existing agency assurance obligations.',
-    'A mechanism to consistently identify high-risk AI use cases.',
-    'A way to make existing compliance requirements easier to navigate.',
-  ],
-  isNot: [
-    'Not an approval process.',
-    'Not a replacement for agency privacy, legal, cyber, records or risk processes.',
-    'Not evidence that a solution is compliant.',
-    'Not an operational assurance function.',
-  ],
-}
-
-// Office of AI context — central policy, federated agency accountability.
-export const officeOfAI = {
-  intro: 'Both evaluations happen within the rules the Office of AI sets state-wide.',
-  owns: [
-    'NSW AI Policy',
-    'AIAF',
-    'High-risk AI criteria',
-    'Guidance and templates',
-    'State-wide monitoring and reporting',
-    'Strategic advice and capability uplift',
-  ],
-  doesNotOwn: [
-    'Product evaluations',
-    'Use case evaluations',
-    'Agency approvals',
-    'Risk acceptance',
-    'Privacy, cyber and legal reviews',
-    'Operational assurance',
-  ],
-}

@@ -20,6 +20,11 @@ export default function JourneyNode({ node, step }) {
               </li>
             ))}
           </ul>
+          {node.outcome && (
+            <p className="app-gate__outcome">
+              <span className="app-gate__outcome-label">Outcome:</span> {node.outcome}
+            </p>
+          )}
         </div>
       </article>
     )

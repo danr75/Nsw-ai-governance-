@@ -64,8 +64,11 @@ body {
 .app-header {
   background: var(--app-brand-dark);
   color: var(--app-white);
-  padding: 1.5rem 0 1.75rem;
+  padding: 1.25rem 0 1.4rem;
   border-bottom: 6px solid var(--app-brand-accent);
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 .app-header__inner {
   max-width: var(--app-maxwidth);
@@ -236,6 +239,16 @@ body {
   font-size: 0.92rem;
   font-weight: 500;
 }
+.app-gate__outcome {
+  margin: 1.1rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--app-border);
+  font-size: 1rem;
+}
+.app-gate__outcome-label {
+  font-weight: 700;
+  color: var(--app-brand-dark);
+}
 
 /* ---------- Step explorer (focused, one step at a time) ---------- */
 .app-explorer {
@@ -252,41 +265,34 @@ body {
   align-items: center;
 }
 
-/* Before/after context peeks */
-.app-peek {
+/* Clickable boxes that navigate to the previous / next step */
+.app-stepbox {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
   text-align: left;
   font: inherit;
-  font-weight: 600;
-  color: var(--app-grey);
-  background: transparent;
-  border: 1px dashed var(--app-border);
-  border-radius: var(--app-radius);
-  padding: 0.6rem 1rem;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.15s ease, background 0.15s ease;
-}
-.app-peek--next {
-  justify-content: flex-end;
-  text-align: right;
-}
-.app-peek:hover:not(:disabled) {
-  opacity: 1;
-  background: var(--app-white);
-}
-.app-peek:disabled {
-  cursor: default;
-  opacity: 0.55;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.85rem;
+  color: var(--app-brand-dark);
+  background: var(--app-white);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius);
+  padding: 0.85rem 1.25rem;
+  box-shadow: var(--app-shadow);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
-.app-peek__text {
+.app-stepbox--down {
+  justify-content: space-between;
+}
+.app-stepbox:hover,
+.app-stepbox:focus-visible {
+  border-color: var(--app-brand-dark);
+  background: var(--app-off-white);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+}
+.app-stepbox__text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -446,85 +452,6 @@ body {
   color: var(--app-brand-accent);
 }
 
-/* ---------- Key messages ---------- */
-.app-messages {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-}
-.app-message-card {
-  background: var(--app-white);
-  border: 1px solid var(--app-border);
-  border-radius: var(--app-radius);
-  padding: 1.4rem 1.5rem;
-  box-shadow: var(--app-shadow);
-  border-top: 4px solid var(--app-grey);
-}
-.app-message-card--is {
-  border-top-color: var(--app-success);
-}
-.app-message-card--not {
-  border-top-color: var(--app-error);
-}
-.app-message-card__title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.15rem;
-  margin: 0 0 0.85rem;
-}
-.app-message-card--is .app-message-card__title .material-icons {
-  color: var(--app-success);
-}
-.app-message-card--not .app-message-card__title .material-icons {
-  color: var(--app-error);
-}
-.app-message-card__list {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-.app-message-card__list li {
-  margin: 0.4rem 0;
-}
-
-/* ---------- Owns / does-not-own (Office of AI) ---------- */
-.app-resp__card {
-  background: var(--app-white);
-  border: 1px solid var(--app-border);
-  border-radius: var(--app-radius);
-  padding: 1.4rem 1.5rem;
-  box-shadow: var(--app-shadow);
-  border-top: 4px solid var(--app-brand-dark);
-}
-.app-resp__cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-.app-detail__label {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem;
-}
-.app-detail__label .material-icons {
-  font-size: 1.15rem;
-}
-.app-detail__label--owns {
-  color: var(--app-success);
-}
-.app-detail__label--not {
-  color: var(--app-error);
-}
-.app-detail__list {
-  margin: 0;
-  padding-left: 1.2rem;
-}
-.app-detail__list li {
-  margin: 0.2rem 0;
-}
-
 /* ---------- Footer ---------- */
 .app-footer {
   background: var(--app-brand-dark);
@@ -562,10 +489,6 @@ button:focus-visible {
   }
 }
 @media (max-width: 720px) {
-  .app-messages,
-  .app-resp__cols {
-    grid-template-columns: 1fr;
-  }
   .app-gate__body {
     padding: 1.2rem;
   }
