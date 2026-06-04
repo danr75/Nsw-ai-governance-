@@ -35,8 +35,8 @@ export default function Ecosystem() {
         <div className="app-eco" role="group" aria-label="Process, today vs future, and the reuse platform">
           {/* Row 1 — the process, one row left to right */}
           <div className="app-eco__lead has-next">
-            <span className="material-icons app-eco__person" aria-hidden="true">
-              person
+            <span className="app-eco__avatar" aria-hidden="true">
+              <span className="material-icons">person</span>
             </span>
             <span className="app-eco__leadtext">{startLabel}</span>
           </div>
@@ -49,7 +49,10 @@ export default function Ecosystem() {
                 i < max ? ' has-next' : ''
               }`}
               aria-current={i === active ? 'step' : undefined}
-              onClick={() => setActive(i)}
+              onClick={(e) => {
+                setActive(i)
+                e.currentTarget.blur()
+              }}
             >
               <span className="app-eco__num">{s.n}</span>
               <span className="app-eco__chiplabel">{s.short}</span>
@@ -84,17 +87,14 @@ export default function Ecosystem() {
               style={col(i)}
               className={`app-eco__future app-eco__future--${s.id}${i === active ? ' is-active' : ''}`}
               aria-current={i === active ? 'step' : undefined}
-              onClick={() => setActive(i)}
+              onClick={(e) => {
+                setActive(i)
+                e.currentTarget.blur()
+              }}
             >
               <span className="app-eco__tool">{s.tool}</span>
               <span className="app-eco__question">{s.question}</span>
-              <span className="app-eco__actions">
-                {reusePlatform.actions.map((a) => (
-                  <span key={a} className="app-eco__action">
-                    {a}
-                  </span>
-                ))}
-              </span>
+              <span className={`app-eco__acct app-eco__acct--${s.id}`}>{s.accountability}</span>
               <span className="app-eco__connector" aria-hidden="true" />
               {i === active && (
                 <span className="app-eco__cardflow">
@@ -145,38 +145,37 @@ export default function Ecosystem() {
               {reusePlatform.runsOn}
             </p>
           </div>
-        </div>
 
-        {/* Detail for the selected step */}
-        <div className={`app-detail app-detail--${step.id}`} aria-live="polite">
-          <div className="app-detail__head">
-            <span className="app-detail__step">Step {step.n}</span>
-            <h2 className="app-detail__title">{step.title}</h2>
-            <span className="app-detail__owner">{step.accountability}</span>
+          {/* Detail for the selected step — aligned to the platform width */}
+          <div
+            className={`app-detail app-detail--${step.id}`}
+            style={{ gridColumn: '2 / -1', gridRow: 5 }}
+            aria-live="polite"
+          >
+            <div className="app-detail__head">
+              <span className="app-detail__step">Step {step.n}</span>
+              <h2 className="app-detail__title">{step.title}</h2>
+            </div>
+            <p className="app-detail__lead">
+              <strong>{step.tool}</strong> uses automation to accelerate this step — it finds and
+              reuses <strong>{step.cards}</strong> from the Reuse Platform, and contributes new ones.
+            </p>
+            <div className="app-detail__assess">
+              <span className="app-detail__assess-label">Assesses</span>
+              <ul className="app-detail__tags">
+                {step.assess.map((a) => (
+                  <li key={a}>{a}</li>
+                ))}
+              </ul>
+            </div>
+            <p className="app-detail__outcome">
+              <span className="material-icons" aria-hidden="true">
+                check_circle
+              </span>
+              Outcome: <strong>{step.outcome}</strong>
+            </p>
           </div>
-          <p className="app-detail__lead">
-            <strong>{step.tool}</strong> uses automation to accelerate this step — it finds and
-            reuses <strong>{step.cards}</strong> from the Reuse Platform, and contributes new ones.
-          </p>
-          <div className="app-detail__assess">
-            <span className="app-detail__assess-label">Assesses</span>
-            <ul className="app-detail__tags">
-              {step.assess.map((a) => (
-                <li key={a}>{a}</li>
-              ))}
-            </ul>
-          </div>
-          <p className="app-detail__outcome">
-            <span className="material-icons" aria-hidden="true">
-              check_circle
-            </span>
-            Outcome: <strong>{step.outcome}</strong>
-          </p>
         </div>
-
-        <p className="app-eco__hint">
-          Step {active + 1} of {steps.length} — use ← → or click a step to explore.
-        </p>
       </div>
     </section>
   )

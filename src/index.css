@@ -138,12 +138,23 @@ body {
   color: var(--app-brand-dark);
   line-height: 1.15;
 }
-.app-eco__person {
-  font-size: 1.9rem;
-  color: var(--app-brand-dark);
+.app-eco__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 50%;
+  background: var(--app-brand-dark);
+  color: #fff;
+  box-shadow: 0 3px 9px rgba(0, 38, 100, 0.28);
+}
+.app-eco__avatar .material-icons {
+  font-size: 1.6rem;
 }
 .app-eco__leadtext {
   max-width: 9ch;
+  font-size: 0.9rem;
 }
 
 .app-eco__chip {
@@ -334,28 +345,38 @@ body {
   color: var(--app-brand-dark);
 }
 .app-eco__question {
-  font-size: 0.85rem;
+  font-size: 1.02rem;
   font-style: italic;
-  color: var(--app-grey);
-  line-height: 1.3;
+  color: var(--app-text);
+  line-height: 1.35;
 }
-.app-eco__actions {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.3rem;
+/* accountability label, anchored to the bottom of the card */
+.app-eco__acct {
   margin-top: auto;
-}
-.app-eco__action {
-  font-size: 0.64rem;
+  align-self: flex-start;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  color: var(--app-brand-dark);
-  background: var(--app-off-white);
-  border: 1px solid var(--app-border);
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: var(--app-grey);
   border-radius: 999px;
-  padding: 0.12rem 0.45rem;
-  white-space: nowrap;
+  padding: 0.2rem 0.65rem;
+}
+.app-eco__acct--product {
+  background: var(--gate-product);
+}
+.app-eco__acct--usecase {
+  background: var(--gate-usecase);
+}
+.app-eco__acct--assurance {
+  background: var(--gate-assurance);
+}
+.app-eco__acct--build {
+  background: var(--gate-build);
+}
+.app-eco__acct--operate {
+  background: var(--gate-operate);
 }
 /* connector from each future tool down into the platform */
 .app-eco__connector {
@@ -508,9 +529,9 @@ body {
   font-size: 1.1rem;
 }
 
-/* ---- Detail for the selected step ---- */
+/* ---- Detail for the selected step (aligned to platform width) ---- */
 .app-detail {
-  margin-top: 1.4rem;
+  margin-top: 0.6rem;
   background: var(--app-white);
   border: 1px solid var(--app-border);
   border-top: 4px solid var(--app-grey);
@@ -611,13 +632,6 @@ body {
 .app-detail__outcome .material-icons {
   color: var(--app-success);
   font-size: 1.2rem;
-}
-
-.app-eco__hint {
-  text-align: center;
-  color: var(--app-grey);
-  font-size: 0.9rem;
-  margin: 1.25rem 0 0;
 }
 
 /* ---------- Focus visibility ---------- */
