@@ -94,7 +94,7 @@ export default function Ecosystem() {
             >
               <span className="app-eco__tool">{s.tool}</span>
               <span className="app-eco__question">{s.question}</span>
-              <span className={`app-eco__acct app-eco__acct--${s.id}`}>{s.accountability}</span>
+              <span className="app-eco__acct">{s.accountability}</span>
               <span className="app-eco__connector" aria-hidden="true" />
               {i === active && (
                 <span className="app-eco__cardflow">

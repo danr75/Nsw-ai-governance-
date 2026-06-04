@@ -354,29 +354,19 @@ body {
 .app-eco__acct {
   margin-top: auto;
   align-self: flex-start;
-  font-size: 0.7rem;
-  font-weight: 700;
+  max-width: 100%;
+  font-size: 0.62rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: #fff;
-  background: var(--app-grey);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--app-grey);
+  background: var(--app-off-white);
+  border: 1px solid var(--app-border);
   border-radius: 999px;
-  padding: 0.2rem 0.65rem;
-}
-.app-eco__acct--product {
-  background: var(--gate-product);
-}
-.app-eco__acct--usecase {
-  background: var(--gate-usecase);
-}
-.app-eco__acct--assurance {
-  background: var(--gate-assurance);
-}
-.app-eco__acct--build {
-  background: var(--gate-build);
-}
-.app-eco__acct--operate {
-  background: var(--gate-operate);
+  padding: 0.12rem 0.5rem;
 }
 /* connector from each future tool down into the platform */
 .app-eco__connector {
