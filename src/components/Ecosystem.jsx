@@ -94,12 +94,7 @@ export default function Ecosystem() {
                 </span>
                 {s.tool}
               </span>
-              <span className="app-eco__cards">
-                <span className="material-icons" aria-hidden="true">
-                  data_object
-                </span>
-                {s.cards}
-              </span>
+              <span className="app-eco__question">{s.question}</span>
               <span className="app-eco__actions">
                 {reusePlatform.actions.map((a) => (
                   <span key={a} className="app-eco__action">
@@ -108,6 +103,17 @@ export default function Ecosystem() {
                 ))}
               </span>
               <span className="app-eco__connector" aria-hidden="true" />
+              {i === active && (
+                <span className="app-eco__cardflow">
+                  <span className="material-icons" aria-hidden="true">
+                    data_object
+                  </span>
+                  {s.cards}
+                  <span className="material-icons app-eco__cardflow-arrow" aria-hidden="true">
+                    south
+                  </span>
+                </span>
+              )}
             </button>
           ))}
 

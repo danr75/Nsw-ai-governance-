@@ -9,20 +9,22 @@ export const intro = {
 export const startLabel = 'I want to use AI'
 
 // The five process steps.
-//  today  = siloed state today
-//  tool   = the automated tool that accelerates the step in future
-//  cards  = the Card type it creates / finds / reuses
-//  uses   = which Reuse Platform capabilities it draws on (attribute ids)
-//  assess / outcome / accountability = the detail shown when the step is selected
+//  short    = process-bar label
+//  tool     = the automated tool that accelerates the step in future
+//  question = the question the step answers (shown on the future card)
+//  cards    = the Card type it creates / finds / reuses (shown on the connector when selected)
+//  uses     = which Reuse Platform capabilities it draws on (attribute ids)
+//  assess / outcome / accountability = detail shown when the step is selected
 export const steps = [
   {
     id: 'product',
     n: 1,
-    short: 'Product',
-    title: 'Product Evaluation',
+    short: 'Evaluate Product',
+    title: 'Evaluate Product',
     accountability: 'Agency Accountability',
     today: 'Siloed & manual',
-    tool: 'Product Assessment',
+    tool: 'AI Powered Assessment',
+    question: 'Can we safely use this product or solution?',
     cards: 'Product Cards',
     uses: ['cards', 'register', 'api'],
     assess: [
@@ -39,11 +41,12 @@ export const steps = [
   {
     id: 'usecase',
     n: 2,
-    short: 'Use Case (AIAF)',
-    title: 'Use Case Evaluation (AIAF)',
+    short: 'Assess Use Case',
+    title: 'Assess Use Case (AIAF)',
     accountability: 'Business Accountability',
     today: 'Manual (Excel)',
-    tool: 'AIAF Tool',
+    tool: 'AIAF Intelligence Platform',
+    question: 'Can we safely use this product for this purpose?',
     cards: 'Risk Cards',
     uses: ['cards', 'structured', 'api'],
     assess: [
@@ -62,11 +65,12 @@ export const steps = [
   {
     id: 'assurance',
     n: 3,
-    short: 'Agency Assurance',
-    title: 'Agency Assurance',
+    short: 'Approve Use',
+    title: 'Approve Use',
     accountability: 'Agency Accountability',
     today: 'Domain-siloed',
-    tool: 'Assurance Workspace',
+    tool: 'Use Case Integrated Assurance',
+    question: 'Have we established accountability and accepted the risk?',
     cards: 'Control & Evidence Cards',
     uses: ['cards', 'structured', 'register'],
     assess: [
@@ -90,6 +94,7 @@ export const steps = [
     accountability: 'Delivery Accountability',
     today: 'Bespoke & manual',
     tool: 'Delivery Pipeline',
+    question: 'Can we build and deploy it safely and reliably?',
     cards: 'Pattern & Config Cards',
     uses: ['cards', 'api', 'cdn'],
     assess: [
@@ -111,6 +116,7 @@ export const steps = [
     accountability: 'Agency Accountability',
     today: 'Point-in-time checks',
     tool: 'Monitoring Suite',
+    question: 'Is it still safe and operating as intended over time?',
     cards: 'Monitoring Cards',
     uses: ['cards', 'cdn', 'api'],
     assess: [
