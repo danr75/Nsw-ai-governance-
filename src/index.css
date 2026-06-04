@@ -271,12 +271,82 @@ body {
 .app-explorer__stage {
   border-radius: var(--app-radius);
 }
-.app-explorer__note {
-  text-align: center;
-  color: var(--app-grey);
-  font-size: 0.82rem;
-  margin: 1.5rem 0 0;
+
+/* End-to-end process overview (top) */
+.app-process {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--app-border);
 }
+.app-process__end {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--app-grey);
+  max-width: 9ch;
+  line-height: 1.2;
+}
+.app-process__sep {
+  color: var(--app-grey);
+  opacity: 0.55;
+  font-size: 1.2rem;
+}
+.app-process__step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--app-grey);
+  background: var(--app-white);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  padding: 0.35rem 0.9rem 0.35rem 0.4rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+.app-process__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: var(--app-grey);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex: 0 0 auto;
+}
+.app-process__step--product .app-process__num {
+  background: var(--gate-product);
+}
+.app-process__step--usecase .app-process__num {
+  background: var(--gate-usecase);
+}
+.app-process__step--assurance .app-process__num {
+  background: var(--gate-assurance);
+}
+.app-process__step:hover {
+  border-color: var(--app-brand-dark);
+  color: var(--app-brand-dark);
+}
+.app-process__step.is-active {
+  border: 2px solid var(--app-brand-dark);
+  color: var(--app-brand-dark);
+  background: var(--app-off-white);
+  font-weight: 700;
+}
+.app-process__step.is-todo {
+  opacity: 0.55;
+}
+
 .app-split {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
@@ -357,35 +427,13 @@ body {
   animation: app-fade 0.25s ease;
 }
 
-/* Controls + progress */
+/* Controls */
 .app-explorer__controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 1rem;
   margin-top: 1.75rem;
-}
-.app-dots {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.app-dot {
-  display: block;
-  width: 12px;
-  height: 12px;
-  padding: 0;
-  border-radius: 50%;
-  border: 2px solid var(--app-brand-dark);
-  background: transparent;
-  cursor: pointer;
-}
-.app-dot.is-active {
-  background: var(--app-brand-dark);
-  transform: scale(1.25);
 }
 .app-explorer__hint {
   text-align: center;
@@ -502,5 +550,13 @@ button:focus-visible {
   }
   .app-header__title {
     font-size: 1.4rem;
+  }
+  /* Keep the process bar compact: numbers only */
+  .app-process__label,
+  .app-process__end {
+    display: none;
+  }
+  .app-process__step {
+    padding: 0.35rem;
   }
 }

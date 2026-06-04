@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { journey, todayFuture } from '../data/content.js'
 import JourneyNode from './JourneyNode.jsx'
 import TodayFuture from './TodayFuture.jsx'
@@ -104,6 +104,34 @@ export default function JourneyExplorer() {
     >
       <div className="nsw-container app-explorer__inner">
         <div className="app-explorer__stage" role="group" aria-roledescription="step viewer">
+        {/* Top — end-to-end process overview */}
+        <nav className="app-process" aria-label="End-to-end process">
+          <span className="app-process__end">{startLabel}</span>
+          <span className="app-process__sep material-icons" aria-hidden="true">
+            chevron_right
+          </span>
+          {gates.map((g, i) => {
+            const state = i === active ? 'is-active' : i < active ? 'is-done' : 'is-todo'
+            return (
+              <Fragment key={g.id}>
+                <button
+                  type="button"
+                  className={`app-process__step app-process__step--${g.id} ${state}`}
+                  aria-current={i === active ? 'step' : undefined}
+                  onClick={() => setActive(i)}
+                >
+                  <span className="app-process__num">{i + 1}</span>
+                  <span className="app-process__label">{g.title}</span>
+                </button>
+                <span className="app-process__sep material-icons" aria-hidden="true">
+                  chevron_right
+                </span>
+              </Fragment>
+            )
+          })}
+          <span className="app-process__end">{endLabel}</span>
+        </nav>
+
         <div className="app-split">
           {/* LEFT — the step in focus, with the prev/next stage above and below */}
           <div className="app-explorer__flow" key={gate.id}>
@@ -143,7 +171,7 @@ export default function JourneyExplorer() {
           </div>
         </div>
 
-        {/* Controls + progress */}
+        {/* Controls */}
         <div className="app-explorer__controls">
           <button
             type="button"
@@ -151,40 +179,20 @@ export default function JourneyExplorer() {
             onClick={() => go(-1)}
             disabled={active === 0}
           >
-            Previous
+            ‹ Back
           </button>
-
-          <ol className="app-dots" aria-label="Steps">
-            {gates.map((g, i) => (
-              <li key={g.id}>
-                <button
-                  type="button"
-                  className={`app-dot${i === active ? ' is-active' : ''}`}
-                  aria-current={i === active ? 'step' : undefined}
-                  aria-label={`Step ${i + 1}: ${g.title}`}
-                  onClick={() => setActive(i)}
-                />
-              </li>
-            ))}
-          </ol>
-
           <button
             type="button"
             className="nsw-button nsw-button--dark"
             onClick={() => go(1)}
             disabled={active === max}
           >
-            Next
+            Next ›
           </button>
         </div>
 
         <p className="app-explorer__hint">
-          Step {active + 1} of {gates.length} — use ↑ ↓ or scroll to move between steps.
-        </p>
-
-        <p className="app-explorer__note">
-          An explainer of NSW AI governance and assurance — not the AIAF assessment or a record of
-          compliance.
+          Step {active + 1} of {gates.length} — use ← → to move through the process.
         </p>
         </div>
       </div>
