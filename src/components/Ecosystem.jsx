@@ -5,7 +5,6 @@ export default function Ecosystem() {
   const [active, setActive] = useState(0)
   const max = steps.length - 1
 
-  // Left / right arrows move the highlighted step.
   useEffect(() => {
     function onKey(e) {
       if (e.target.matches?.('input, textarea, select')) return
@@ -28,6 +27,7 @@ export default function Ecosystem() {
   }, [max])
 
   const col = (i) => ({ gridColumn: i + 2 })
+  const step = steps[active]
 
   return (
     <section id="content" className="app-eco-wrap" aria-label="AI assurance ecosystem">
@@ -58,8 +58,8 @@ export default function Ecosystem() {
 
           {/* Row 2 — Today (agency siloed) */}
           <div className="app-eco__rowlabel app-eco__rowlabel--today">
-            Today
-            <small>agency siloed</small>
+            <span className="app-eco__rowlabel-main">Today</span>
+            <span className="app-eco__rowlabel-sub">agency siloed</span>
           </div>
           {steps.map((s, i) => (
             <div
@@ -74,21 +74,26 @@ export default function Ecosystem() {
             </div>
           ))}
 
-          {/* Row 3 — Future (connected) */}
+          {/* Row 3 — Future (automated tools) */}
           <div className="app-eco__rowlabel app-eco__rowlabel--future">
-            Future
-            <small>connected</small>
+            <span className="app-eco__rowlabel-main">Future</span>
+            <span className="app-eco__rowlabel-sub">automated &amp; connected</span>
           </div>
           {steps.map((s, i) => (
-            <div
+            <button
               key={s.id}
+              type="button"
               style={col(i)}
-              className={`app-eco__future app-eco__future--${s.id}${
-                i === active ? ' is-active' : ''
-              }`}
+              className={`app-eco__future app-eco__future--${s.id}${i === active ? ' is-active' : ''}`}
+              aria-current={i === active ? 'step' : undefined}
+              onClick={() => setActive(i)}
             >
-              <span className="app-eco__tool">{s.tool}</span>
-              <span className="app-eco__future-state">{s.future}</span>
+              <span className="app-eco__tool">
+                <span className="material-icons app-eco__bolt" aria-hidden="true">
+                  bolt
+                </span>
+                {s.tool}
+              </span>
               <span className="app-eco__cards">
                 <span className="material-icons" aria-hidden="true">
                   data_object
@@ -103,7 +108,7 @@ export default function Ecosystem() {
                 ))}
               </span>
               <span className="app-eco__connector" aria-hidden="true" />
-            </div>
+            </button>
           ))}
 
           {/* Row 4 — the shared Reuse Platform */}
@@ -120,7 +125,7 @@ export default function Ecosystem() {
             </div>
             <ul className="app-eco__platform-attrs">
               {reusePlatform.attributes.map((a) => (
-                <li key={a.label}>
+                <li key={a.id} className={step.uses.includes(a.id) ? 'is-used' : ''}>
                   <span className="material-icons" aria-hidden="true">
                     {a.icon}
                   </span>
@@ -138,6 +143,33 @@ export default function Ecosystem() {
               {reusePlatform.runsOn}
             </p>
           </div>
+        </div>
+
+        {/* Detail for the selected step */}
+        <div className={`app-detail app-detail--${step.id}`} aria-live="polite">
+          <div className="app-detail__head">
+            <span className="app-detail__step">Step {step.n}</span>
+            <h2 className="app-detail__title">{step.title}</h2>
+            <span className="app-detail__owner">{step.accountability}</span>
+          </div>
+          <p className="app-detail__lead">
+            <strong>{step.tool}</strong> uses automation to accelerate this step — it finds and
+            reuses <strong>{step.cards}</strong> from the Reuse Platform, and contributes new ones.
+          </p>
+          <div className="app-detail__assess">
+            <span className="app-detail__assess-label">Assesses</span>
+            <ul className="app-detail__tags">
+              {step.assess.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          </div>
+          <p className="app-detail__outcome">
+            <span className="material-icons" aria-hidden="true">
+              check_circle
+            </span>
+            Outcome: <strong>{step.outcome}</strong>
+          </p>
         </div>
 
         <p className="app-eco__hint">
