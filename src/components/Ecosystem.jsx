@@ -59,7 +59,6 @@ export default function Ecosystem() {
           {/* Row 2 — Today (agency siloed) */}
           <div className="app-eco__rowlabel app-eco__rowlabel--today">
             <span className="app-eco__rowlabel-main">Today</span>
-            <span className="app-eco__rowlabel-sub">agency siloed</span>
           </div>
           {steps.map((s, i) => (
             <div
@@ -77,7 +76,6 @@ export default function Ecosystem() {
           {/* Row 3 — Future (automated tools) */}
           <div className="app-eco__rowlabel app-eco__rowlabel--future">
             <span className="app-eco__rowlabel-main">Future</span>
-            <span className="app-eco__rowlabel-sub">automated &amp; connected</span>
           </div>
           {steps.map((s, i) => (
             <button
@@ -88,12 +86,7 @@ export default function Ecosystem() {
               aria-current={i === active ? 'step' : undefined}
               onClick={() => setActive(i)}
             >
-              <span className="app-eco__tool">
-                <span className="material-icons app-eco__bolt" aria-hidden="true">
-                  bolt
-                </span>
-                {s.tool}
-              </span>
+              <span className="app-eco__tool">{s.tool}</span>
               <span className="app-eco__question">{s.question}</span>
               <span className="app-eco__actions">
                 {reusePlatform.actions.map((a) => (
@@ -105,12 +98,15 @@ export default function Ecosystem() {
               <span className="app-eco__connector" aria-hidden="true" />
               {i === active && (
                 <span className="app-eco__cardflow">
-                  <span className="material-icons" aria-hidden="true">
-                    data_object
+                  <span className="app-eco__cardflow-chip">
+                    <span className="material-icons" aria-hidden="true">
+                      data_object
+                    </span>
+                    {s.cards}
                   </span>
-                  {s.cards}
-                  <span className="material-icons app-eco__cardflow-arrow" aria-hidden="true">
-                    south
+                  <span className="app-eco__cardflow-arrows" aria-hidden="true">
+                    <span className="material-icons app-eco__arrow-down">arrow_downward</span>
+                    <span className="material-icons app-eco__arrow-up">arrow_upward</span>
                   </span>
                 </span>
               )}
