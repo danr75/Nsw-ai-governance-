@@ -104,7 +104,7 @@ body {
   overflow: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .app-eco-wrap > .nsw-container {
   max-width: var(--app-maxwidth);
@@ -128,12 +128,13 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  gap: 0.2rem;
-  text-align: center;
+  gap: 0.15rem;
+  padding-left: calc(0.7rem + 4px);
+  text-align: left;
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--app-brand-dark);
   line-height: 1.15;
 }
@@ -142,7 +143,7 @@ body {
   color: var(--app-brand-dark);
 }
 .app-eco__leadtext {
-  max-width: 8ch;
+  max-width: 9ch;
 }
 
 .app-eco__chip {
@@ -216,30 +217,35 @@ body {
   color: var(--app-grey);
 }
 
-/* ---- Row labels ---- */
+/* ---- Row labels (stand out, aligned to the lead-in axis) ---- */
 .app-eco__rowlabel {
   grid-column: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-weight: 700;
+  padding-left: 0.7rem;
+  border-left: 4px solid var(--app-border);
+}
+.app-eco__rowlabel-main {
+  font-size: 1.2rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  font-size: 0.9rem;
+  line-height: 1.1;
 }
-.app-eco__rowlabel small {
-  font-size: 0.68rem;
+.app-eco__rowlabel-sub {
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: none;
   opacity: 0.7;
 }
 .app-eco__rowlabel--today {
   grid-row: 2;
+  border-left-color: var(--app-grey);
   color: var(--app-grey);
 }
 .app-eco__rowlabel--future {
   grid-row: 3;
+  border-left-color: var(--app-success);
   color: var(--app-success);
 }
 
@@ -272,19 +278,23 @@ body {
   border-style: solid;
 }
 
-/* ---- Row 3: Future (connected) ---- */
+/* ---- Row 3: Future (automated tools) ---- */
 .app-eco__future {
   grid-row: 3;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  padding: 0.9rem 0.9rem 1rem;
+  gap: 0.45rem;
+  padding: 0.9rem;
+  text-align: left;
+  font: inherit;
   background: var(--app-white);
   border: 1px solid var(--app-border);
   border-top: 4px solid var(--app-grey);
   border-radius: var(--app-radius);
   box-shadow: var(--app-shadow);
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 }
 .app-eco__future--product {
   border-top-color: var(--gate-product);
@@ -301,17 +311,25 @@ body {
 .app-eco__future--operate {
   border-top-color: var(--gate-operate);
 }
+.app-eco__future:hover {
+  border-color: var(--app-brand-dark);
+}
 .app-eco__future.is-active {
   border-color: var(--app-brand-dark);
   box-shadow: 0 6px 18px rgba(0, 38, 100, 0.16);
+  transform: translateY(-2px);
 }
 .app-eco__tool {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   font-weight: 700;
+  font-size: 1rem;
   color: var(--app-brand-dark);
 }
-.app-eco__future-state {
-  font-size: 0.82rem;
-  color: var(--app-grey);
+.app-eco__bolt {
+  font-size: 1.15rem;
+  color: var(--app-brand-accent);
 }
 .app-eco__cards {
   display: inline-flex;
@@ -327,20 +345,21 @@ body {
 }
 .app-eco__actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.3rem;
-  margin-top: 0.15rem;
+  margin-top: auto;
 }
 .app-eco__action {
-  font-size: 0.7rem;
+  font-size: 0.64rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   color: var(--app-brand-dark);
   background: var(--app-off-white);
   border: 1px solid var(--app-border);
   border-radius: 999px;
-  padding: 0.1rem 0.5rem;
+  padding: 0.12rem 0.45rem;
+  white-space: nowrap;
 }
 /* connector from each future tool down into the platform */
 .app-eco__connector {
@@ -422,10 +441,18 @@ body {
   gap: 0.4rem;
   font-size: 0.85rem;
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
   padding: 0.3rem 0.75rem;
+  opacity: 0.5;
+  transition: opacity 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+/* highlight the capabilities the selected step uses */
+.app-eco__platform-attrs li.is-used {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #fff;
 }
 .app-eco__platform-attrs .material-icons {
   font-size: 1.05rem;
@@ -442,11 +469,116 @@ body {
   font-size: 1.1rem;
 }
 
+/* ---- Detail for the selected step ---- */
+.app-detail {
+  margin-top: 1.4rem;
+  background: var(--app-white);
+  border: 1px solid var(--app-border);
+  border-top: 4px solid var(--app-grey);
+  border-radius: var(--app-radius);
+  box-shadow: var(--app-shadow);
+  padding: 1.1rem 1.3rem;
+}
+.app-detail--product {
+  border-top-color: var(--gate-product);
+}
+.app-detail--usecase {
+  border-top-color: var(--gate-usecase);
+}
+.app-detail--assurance {
+  border-top-color: var(--gate-assurance);
+}
+.app-detail--build {
+  border-top-color: var(--gate-build);
+}
+.app-detail--operate {
+  border-top-color: var(--gate-operate);
+}
+.app-detail__head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.app-detail__step {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #fff;
+  background: var(--app-brand-dark);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+.app-detail__title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--app-brand-dark);
+}
+.app-detail__owner {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--app-grey);
+  background: var(--app-off-white);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+}
+.app-detail__lead {
+  margin: 0.75rem 0 0;
+  max-width: 90ch;
+}
+.app-detail__assess {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+.app-detail__assess-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--app-grey);
+}
+.app-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.app-detail__tags li {
+  font-size: 0.82rem;
+  font-weight: 500;
+  background: var(--app-off-white);
+  border: 1px solid var(--app-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+}
+.app-detail__outcome {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.9rem 0 0;
+  font-size: 0.98rem;
+}
+.app-detail__outcome .material-icons {
+  color: var(--app-success);
+  font-size: 1.2rem;
+}
+
 .app-eco__hint {
   text-align: center;
   color: var(--app-grey);
   font-size: 0.9rem;
-  margin: 1.5rem 0 0;
+  margin: 1.25rem 0 0;
 }
 
 /* ---------- Focus visibility ---------- */
