@@ -1,0 +1,149 @@
+import { useEffect, useState } from 'react'
+import { startLabel, steps, reusePlatform } from '../data/content.js'
+
+export default function Ecosystem() {
+  const [active, setActive] = useState(0)
+  const max = steps.length - 1
+
+  // Left / right arrows move the highlighted step.
+  useEffect(() => {
+    function onKey(e) {
+      if (e.target.matches?.('input, textarea, select')) return
+      if (['ArrowRight', 'ArrowDown'].includes(e.key)) {
+        e.preventDefault()
+        setActive((a) => Math.min(max, a + 1))
+      } else if (['ArrowLeft', 'ArrowUp'].includes(e.key)) {
+        e.preventDefault()
+        setActive((a) => Math.max(0, a - 1))
+      } else if (e.key === 'Home') {
+        e.preventDefault()
+        setActive(0)
+      } else if (e.key === 'End') {
+        e.preventDefault()
+        setActive(max)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [max])
+
+  const col = (i) => ({ gridColumn: i + 2 })
+
+  return (
+    <section id="content" className="app-eco-wrap" aria-label="AI assurance ecosystem">
+      <div className="nsw-container">
+        <div className="app-eco" role="group" aria-label="Process, today vs future, and the reuse platform">
+          {/* Row 1 — the process, one row left to right */}
+          <div className="app-eco__lead has-next">
+            <span className="material-icons app-eco__person" aria-hidden="true">
+              person
+            </span>
+            <span className="app-eco__leadtext">{startLabel}</span>
+          </div>
+          {steps.map((s, i) => (
+            <button
+              key={s.id}
+              type="button"
+              style={col(i)}
+              className={`app-eco__chip app-eco__chip--${s.id}${i === active ? ' is-active' : ''}${
+                i < max ? ' has-next' : ''
+              }`}
+              aria-current={i === active ? 'step' : undefined}
+              onClick={() => setActive(i)}
+            >
+              <span className="app-eco__num">{s.n}</span>
+              <span className="app-eco__chiplabel">{s.short}</span>
+            </button>
+          ))}
+
+          {/* Row 2 — Today (agency siloed) */}
+          <div className="app-eco__rowlabel app-eco__rowlabel--today">
+            Today
+            <small>agency siloed</small>
+          </div>
+          {steps.map((s, i) => (
+            <div
+              key={s.id}
+              style={col(i)}
+              className={`app-eco__today${i === active ? ' is-active' : ''}`}
+            >
+              <span className="material-icons app-eco__siloicon" aria-hidden="true">
+                lock
+              </span>
+              <span>{s.today}</span>
+            </div>
+          ))}
+
+          {/* Row 3 — Future (connected) */}
+          <div className="app-eco__rowlabel app-eco__rowlabel--future">
+            Future
+            <small>connected</small>
+          </div>
+          {steps.map((s, i) => (
+            <div
+              key={s.id}
+              style={col(i)}
+              className={`app-eco__future app-eco__future--${s.id}${
+                i === active ? ' is-active' : ''
+              }`}
+            >
+              <span className="app-eco__tool">{s.tool}</span>
+              <span className="app-eco__future-state">{s.future}</span>
+              <span className="app-eco__cards">
+                <span className="material-icons" aria-hidden="true">
+                  data_object
+                </span>
+                {s.cards}
+              </span>
+              <span className="app-eco__actions">
+                {reusePlatform.actions.map((a) => (
+                  <span key={a} className="app-eco__action">
+                    {a}
+                  </span>
+                ))}
+              </span>
+              <span className="app-eco__connector" aria-hidden="true" />
+            </div>
+          ))}
+
+          {/* Row 4 — the shared Reuse Platform */}
+          <div className="app-eco__platform">
+            <div className="app-eco__platform-head">
+              <span className="material-icons" aria-hidden="true">
+                inventory_2
+              </span>
+              <div>
+                <p className="app-eco__platform-name">{reusePlatform.name}</p>
+                <p className="app-eco__platform-tag">{reusePlatform.tagline}</p>
+              </div>
+              <span className="app-eco__platform-flow">create · find · reuse Cards</span>
+            </div>
+            <ul className="app-eco__platform-attrs">
+              {reusePlatform.attributes.map((a) => (
+                <li key={a.label}>
+                  <span className="material-icons" aria-hidden="true">
+                    {a.icon}
+                  </span>
+                  {a.label}
+                </li>
+              ))}
+            </ul>
+            <p className="app-eco__platform-runson">
+              <span className="material-icons" aria-hidden="true">
+                desktop_windows
+              </span>
+              <span className="material-icons" aria-hidden="true">
+                cloud
+              </span>
+              {reusePlatform.runsOn}
+            </p>
+          </div>
+        </div>
+
+        <p className="app-eco__hint">
+          Step {active + 1} of {steps.length} — use ← → or click a step to explore.
+        </p>
+      </div>
+    </section>
+  )
+}
