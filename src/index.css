@@ -18,6 +18,8 @@
   --gate-product: #00795f; /* Product Evaluation — agency, teal */
   --gate-usecase: #d7153a; /* Use Case Evaluation (AIAF) — accent red */
   --gate-assurance: #2e5299; /* Agency Assurance — agency, blue */
+  --gate-build: #6a1b9a; /* Build & Deploy — purple */
+  --gate-operate: #a8500a; /* Operate & Review — burnt orange */
 
   --app-success: #008a07;
   --app-error: #b81237;
@@ -180,6 +182,12 @@ body {
 .app-gate--assurance .app-gate__bar {
   background: var(--gate-assurance);
 }
+.app-gate--build .app-gate__bar {
+  background: var(--gate-build);
+}
+.app-gate--operate .app-gate__bar {
+  background: var(--gate-operate);
+}
 .app-gate__body {
   padding: 1.4rem 1.6rem;
   flex: 1 1 auto;
@@ -221,6 +229,12 @@ body {
 }
 .app-gate--assurance .app-gate__accountability {
   background: var(--gate-assurance);
+}
+.app-gate--build .app-gate__accountability {
+  background: var(--gate-build);
+}
+.app-gate--operate .app-gate__accountability {
+  background: var(--gate-operate);
 }
 .app-gate__assess-label {
   font-size: 0.82rem;
@@ -272,19 +286,19 @@ body {
   border-radius: var(--app-radius);
 }
 
-/* End-to-end process overview (top) */
+/* ===== The process is the hero ===== */
 .app-process {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 0.4rem 0.6rem;
-  margin-bottom: 1.75rem;
-  padding-bottom: 1.5rem;
+  gap: 0.5rem 0.6rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
   border-bottom: 1px solid var(--app-border);
 }
-.app-process__end {
-  font-size: 0.72rem;
+.app-process__lead {
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -294,34 +308,36 @@ body {
 }
 .app-process__sep {
   color: var(--app-grey);
-  opacity: 0.55;
-  font-size: 1.2rem;
+  opacity: 0.5;
+  font-size: 1.3rem;
 }
 .app-process__step {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   font: inherit;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--app-grey);
   background: var(--app-white);
   border: 1px solid var(--app-border);
   border-radius: 999px;
-  padding: 0.35rem 0.9rem 0.35rem 0.4rem;
+  padding: 0.5rem 1.1rem 0.5rem 0.5rem;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+  transition: transform 0.18s ease, border-color 0.15s ease, background 0.15s ease,
+    color 0.15s ease, box-shadow 0.15s ease;
 }
 .app-process__num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.9rem;
+  height: 1.9rem;
   border-radius: 50%;
   background: var(--app-grey);
   color: #fff;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   flex: 0 0 auto;
 }
 .app-process__step--product .app-process__num {
@@ -333,18 +349,27 @@ body {
 .app-process__step--assurance .app-process__num {
   background: var(--gate-assurance);
 }
+.app-process__step--build .app-process__num {
+  background: var(--gate-build);
+}
+.app-process__step--operate .app-process__num {
+  background: var(--gate-operate);
+}
 .app-process__step:hover {
   border-color: var(--app-brand-dark);
   color: var(--app-brand-dark);
 }
+/* Selected step is visibly larger and stands out */
 .app-process__step.is-active {
+  transform: scale(1.16);
   border: 2px solid var(--app-brand-dark);
   color: var(--app-brand-dark);
   background: var(--app-off-white);
   font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 38, 100, 0.18);
 }
 .app-process__step.is-todo {
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .app-split {
@@ -354,72 +379,10 @@ body {
   align-items: center;
 }
 
-/* Clickable boxes that navigate to the previous / next step */
-.app-stepbox {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  text-align: left;
-  font: inherit;
-  font-weight: 700;
-  color: var(--app-brand-dark);
-  background: var(--app-white);
-  border: 1px solid var(--app-border);
-  border-radius: var(--app-radius);
-  padding: 0.85rem 1.25rem;
-  box-shadow: var(--app-shadow);
-  cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
-}
-.app-stepbox--down {
-  justify-content: space-between;
-}
-.app-stepbox:hover,
-.app-stepbox:focus-visible {
-  border-color: var(--app-brand-dark);
-  background: var(--app-off-white);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
-}
-.app-stepbox__text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 /* The active step */
 .app-explorer__active {
   margin: 0;
   animation: app-fade 0.25s ease;
-}
-
-/* White milestone boxes that bridge the steps */
-.app-milestone {
-  text-align: center;
-  font-weight: 700;
-  color: var(--app-brand-dark);
-  background: var(--app-white);
-  border: 1px solid var(--app-border);
-  border-radius: var(--app-radius);
-  padding: 0.9rem 1.25rem;
-  box-shadow: var(--app-shadow);
-}
-.app-milestone--start {
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-.app-milestone--end {
-  border-color: var(--app-brand-dark);
-  border-width: 2px;
-}
-.app-flowarrow {
-  display: flex;
-  justify-content: center;
-  color: var(--app-grey);
-  padding: 0.3rem 0;
-}
-.app-flowarrow .material-icons {
-  font-size: 1.7rem;
 }
 
 /* Right pane today/future, synced to the active step */
@@ -427,19 +390,11 @@ body {
   animation: app-fade 0.25s ease;
 }
 
-/* Controls */
-.app-explorer__controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1.75rem;
-}
 .app-explorer__hint {
   text-align: center;
   color: var(--app-grey);
   font-size: 0.9rem;
-  margin: 0.75rem 0 0;
+  margin: 2rem 0 0;
 }
 
 @keyframes app-fade {
@@ -533,9 +488,6 @@ button:focus-visible {
     grid-template-columns: 1fr;
     gap: 1.75rem;
   }
-  .app-explorer__controls {
-    flex-wrap: wrap;
-  }
 }
 @media (max-width: 720px) {
   .app-gate__body {
@@ -553,10 +505,13 @@ button:focus-visible {
   }
   /* Keep the process bar compact: numbers only */
   .app-process__label,
-  .app-process__end {
+  .app-process__lead {
     display: none;
   }
   .app-process__step {
     padding: 0.35rem;
+  }
+  .app-process__step.is-active {
+    transform: scale(1.1);
   }
 }
